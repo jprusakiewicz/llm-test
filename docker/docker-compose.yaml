@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  database:
+    build: .
+    container_name: database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+  trino:
+    image: trinodb/trino
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./catalog:/etc/trino/catalog
+networks:
+  my-network:
+    driver: bridge
